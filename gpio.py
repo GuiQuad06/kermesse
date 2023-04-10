@@ -13,40 +13,29 @@
 import RPi.GPIO as GPIO
 import time
 
-#PIN MAPPING FOR THE RASPBERRY
-#Besoin : un gpio pour le conact (gpio 4), un gpio pour le led verte (gpio 23) et un pour la led rouge (gpio 18)
-#PIN_CONTACT = 4
-#PIN_RED_LED = 18
-#PIN_GREEN_LED = 23
+GPIO.setwarnings(False)
 
 # Event : Eteindre LED verte / Mettre la LED rouge pendant 2 sec, son "tu as perdu"
 def contact_callback(channel):
-    print("Event s'est produit sur" + channel )
-    Gpio.game_over()
-
-#SETMODE & DIRECTION FOR THE GPIO
-#GPIO.setmode(GPIO.BCM)
-
-#GPIO.setup(PIN_CONTACT, GPIO.IN)
-#GPIO.setup(PIN_RED_LED, GPIO.OUT)
-#GPIO.setup(PIN_GREEN_LED, GPIO.OUT)
-
-#GPIO.add_event_detect(PIN_CONTACT, GPIO.RISING, callback=contact_callback)
+    GPIO.remove_event_detect(channel)
+    #print("Event s'est produit sur" + str(channel) )
+    GPIO.output(18, GPIO.HIGH)
+    GPIO.output(23, GPIO.LOW)
+    time.sleep(2)
+    Gpio()
 
 class Gpio:
     def __init__(self):
+        #PIN MAPPING FOR THE RASPBERRY
         self.contact = 4
         self.red_led = 18
         self.green_led = 23
         self.config()
     def config(self):
+        #SETMODE & DIRECTION FOR THE GPIO
         GPIO.setmode(GPIO.BCM)
-        GPIO.setup(self.contact, GPIO.IN)
+        GPIO.setup(self.contact, GPIO.IN, pull_up_down=GPIO.PUD_UP)
         GPIO.setup(self.red_led, GPIO.OUT, initial=GPIO.LOW)
         GPIO.setup(self.green_led, GPIO.OUT, initial=GPIO.HIGH)
-        GPIO.add_event_detect(self.contact, GPIO.RISING, callback=contact_callback)
-    def game_over(self):
-        GPIO.output(self.red_led, GPIO.HIGH)
-        GPIO.output(self.green_led, GPIO.LOW)
-        time.sleep(2)
-        self.config()
+        GPIO.add_event_detect(self.contact, GPIO.FALLING, callback=contact_callback)
+    

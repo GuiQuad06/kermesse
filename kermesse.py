@@ -11,12 +11,17 @@
 
 #IMPORTS
 from gpio import *
+#import pymedia
 import time
 
 def main():
     pass
     # Init : configure les gpios, met la musique de fond, allume la LED
     Gpio()
+    
+    #player = pymedia.Player()
+    #player.start()
+    #player.startPlayback('toto.mp3')
 
     while True:
         # Boucle infinie : Attends un event + sleep
