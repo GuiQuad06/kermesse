@@ -12,8 +12,10 @@
 #IMPORTS
 import RPi.GPIO as GPIO
 import time
+from playsound import playsound 
 
 GPIO.setwarnings(False)
+playsound('music/background.mp3', block=False)
 
 # Event : Eteindre LED verte / Mettre la LED rouge pendant 2 sec, son "tu as perdu"
 def contact_callback(channel):
@@ -21,7 +23,8 @@ def contact_callback(channel):
     #print("Event s'est produit sur" + str(channel) )
     GPIO.output(18, GPIO.HIGH)
     GPIO.output(23, GPIO.LOW)
-    time.sleep(2)
+    playsound('music/gameover.wav')
+    #time.sleep(2)
     Gpio()
 
 class Gpio:
