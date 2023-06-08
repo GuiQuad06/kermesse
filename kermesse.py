@@ -29,6 +29,8 @@ class check_contact(Thread):
         while True:
             if GPIO.input(4) == 1:
                 playsound('music/gameover.wav')
+                GPIO.output(18, GPIO.HIGH)
+                GPIO.output(23, GPIO.LOW)
                 if self.tries > 0:
                     self.labelText.set(self.tries)
                     print("aouch !")
