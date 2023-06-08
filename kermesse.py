@@ -16,24 +16,23 @@ import tkinter as tk
 from tkinter import *
 from threading import Thread
 
-Gpio()
+Gpio() #INIT
 
 def restart():
     contact_handler.tries = 5    
     contact_handler.labelText.set(contact_handler.tries)
     
-
 class check_contact(Thread):
 
     def __init__(self, labelText):
         Thread.__init__(self)
         self.labelText = labelText
         self.tries = 5
+        self.labelText.set(self.tries)
 
     def checkloop(self):
         while True:
-            if GPIO.input(4) == 1:
-                playsound('music/gameover.wav')
+            if GPIO.input(4) == 0:
                 GPIO.output(18, GPIO.HIGH)
                 GPIO.output(23, GPIO.LOW)
                 if self.tries > 0:
@@ -44,10 +43,10 @@ class check_contact(Thread):
                     self.labelText.set("GAME OVER")
                     print("game over")
                     self.tries = 5
+                playsound('music/gameover.wav')
+                time.sleep(0.2)
+                while GPIO.input(4) == 0: pass
                 
-                while GPIO.input(4) == 1: pass
-                time.sleep(0.5)
-
 #Création de l'objet Tkinter
 window = Tk()
 
@@ -66,6 +65,7 @@ contact.start()
 w, h = window.winfo_screenwidth(), window.winfo_screenheight()
 window.geometry("%dx%d" % (w, h))
 
+#Bouton Restart
 Button(window, text='RESTART!', font=("Arial", 24, "bold"), command= restart).pack(fill = BOTH, expand = TRUE)
 
 open
