@@ -18,6 +18,11 @@ from threading import Thread
 
 Gpio()
 
+def restart():
+    contact_handler.tries = 5    
+    contact_handler.labelText.set(contact_handler.tries)
+    
+
 class check_contact(Thread):
 
     def __init__(self, labelText):
@@ -39,8 +44,9 @@ class check_contact(Thread):
                     self.labelText.set("GAME OVER")
                     print("game over")
                     self.tries = 5
-                time.sleep(0.5)
+                
                 while GPIO.input(4) == 1: pass
+                time.sleep(0.5)
 
 #Création de l'objet Tkinter
 window = Tk()
@@ -59,6 +65,9 @@ contact.start()
 #Ouverture de la fenêtre avant la boucle du jeu
 w, h = window.winfo_screenwidth(), window.winfo_screenheight()
 window.geometry("%dx%d" % (w, h))
+
+Button(window, text='RESTART!', font=("Arial", 24, "bold"), command= restart).pack(fill = BOTH, expand = TRUE)
+
 open
 window.mainloop()
 
