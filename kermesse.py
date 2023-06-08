@@ -47,7 +47,7 @@ window = Tk()
 
 label_text = StringVar()
 display = Label(window, textvariable=label_text) 
-display.config(font=('Helvetica', 100, 'bold'))
+display.config(font=('Helvetica', 200, 'bold'))
 display.pack(fill = BOTH, expand = True)
 window.title("LABYRINTHE 3000") 
 
