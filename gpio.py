@@ -11,15 +11,14 @@
 
 #IMPORTS
 import RPi.GPIO as GPIO
-import time
-from playsound import playsound 
+import time 
 
 GPIO.setwarnings(False)
-playsound('music/background.mp3', block=False)
 
 class Gpio:
     def __init__(self):
         #PIN MAPPING FOR THE RASPBERRY
+        #playsound('music/background.mp3', block=False)
         self.contact = 4
         self.red_led = 18
         self.green_led = 23

@@ -15,12 +15,15 @@ import time
 import tkinter as tk
 from tkinter import *
 from threading import Thread
+from playsound import playsound
 
 Gpio() #INIT
+playsound('music/background.mp3', block=False)
 
 def restart():
     contact_handler.tries = 5    
     contact_handler.labelText.set(contact_handler.tries)
+    playsound('music/background.mp3', block=False)
     
 class check_contact(Thread):
 
